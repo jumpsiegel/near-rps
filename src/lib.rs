@@ -11,13 +11,13 @@ pub struct StatusMessage {
     records: LookupMap<AccountId, String>,
 }
 
-impl Default for StatusMessage {
-    fn default() -> Self {
-        Self {
-            records: LookupMap::new(b"r".to_vec()),
-        }
-    }
-}
+//impl Default for StatusMessage {
+//    fn default() -> Self {
+//        Self {
+//            records: LookupMap::new(b"r".to_vec()),
+//        }
+//    }
+//}
 
 #[near_bindgen]
 impl StatusMessage {
