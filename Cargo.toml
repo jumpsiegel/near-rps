@@ -1,8 +1,8 @@
 [package]
-name = "status-message"
+name = "rps"
 version = "0.1.0"
-authors = ["Near Inc <hello@nearprotocol.com>"]
-edition = "2018"
+authors = ["Josh Siegel <jsiegel@jumptrading.com>"]
+edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
