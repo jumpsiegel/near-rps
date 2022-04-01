@@ -1,13 +1,14 @@
 use near_sdk::borsh::{self, BorshDeserialize, BorshSerialize};
 use near_sdk::collections::LookupMap;
 use near_sdk::{env, near_bindgen};
+use near_sdk::AccountId;
 
 //near_sdk::setup_alloc!();
 
 #[near_bindgen]
 #[derive(BorshDeserialize, BorshSerialize)]
 pub struct StatusMessage {
-    records: LookupMap<String, String>,
+    records: LookupMap<AccountId, String>,
 }
 
 impl Default for StatusMessage {
@@ -21,11 +22,11 @@ impl Default for StatusMessage {
 #[near_bindgen]
 impl StatusMessage {
     pub fn set_status(&mut self, message: String) {
-        let account_id: String = env::signer_account_id();
+        let account_id = env::signer_account_id();
         self.records.insert(&account_id, &message);
     }
 
-    pub fn get_status(&self, account_id: String) -> Option<String> {
+    pub fn get_status(&self, account_id: AccountId) -> Option<String> {
         return self.records.get(&account_id);
     }
 }
