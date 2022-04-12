@@ -1,6 +1,9 @@
 If needed, install `Rust`:
 
   curl https://sh.rustup.rs -sSf | sh
+
+You need at least version 1.56 or later
+
   rustup default 1.56
   rustup update
   rustup target add wasm32-unknown-unknown
@@ -9,7 +12,7 @@ If needed, install `near-cli`:
 
    npm install near-cli -g
 
-To install the npm dependencies
+To install the npm dependencies of this test program
 
    npm install
 
@@ -27,5 +30,4 @@ to bring up the sandbox, start a tmux window and run
 https://docs.near.org/docs/develop/contracts/sandbox
 
 to build
-
    make

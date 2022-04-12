@@ -11,8 +11,8 @@ function getConfig(env) {
         networkId: "sandbox",
         nodeUrl: "http://localhost:3030",
         masterAccount: "test.near",
-        contractAccount: "status-message.test.near",
-        keyPath: "/home/jsiegel/near-sandbox/validator_key.json",
+        contractAccount: "rps.test.near",
+        keyPath: "./_sandbox/validator_key.json",
       };
   }
 }
@@ -45,7 +45,7 @@ async function initNear() {
     nodeUrl: config.nodeUrl,
   });
   masterAccount = new nearAPI.Account(near.connection, config.masterAccount);
-  console.log("Finish init NEAR");
+  console.log("Finish init NEAR: " + JSON.stringify(await masterAccount.getAccountBalance()));
 }
 
 async function createContractUser(
@@ -54,11 +54,13 @@ async function createContractUser(
   contractMethods
 ) {
   let accountId = accountPrefix + "." + config.masterAccount;
-  await masterAccount.createAccount(
+  let resp = await masterAccount.createAccount(
     accountId,
     pubKey,
     new BN(10).pow(new BN(25))
   );
+  console.log("accountId: " + JSON.stringify(resp))
+    
   keyStore.setKey(config.networkId, accountId, masterKey);
   const account = new nearAPI.Account(near.connection, accountId);
   const accountUseContract = new nearAPI.Contract(
@@ -70,12 +72,13 @@ async function createContractUser(
 }
 
 async function initTest() {
-  const contract = await fs.readFile("./res/status_message.wasm");
+  const contract = await fs.readFile("./target/wasm32-unknown-unknown/release/rps.wasm");
+
   const _contractAccount = await masterAccount.createAndDeployContract(
     config.contractAccount,
     pubKey,
     contract,
-    new BN(10).pow(new BN(25))
+    new BN(10).pow(new BN(26))
   );
 
   const aliceUseContract = await createContractUser(
